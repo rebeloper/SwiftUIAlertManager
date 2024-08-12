@@ -13,7 +13,7 @@ struct AlertManagerModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .environmentObject(alertManager)
+            .environment(\.alertManager, alertManager)
             .alert(alertManager.options.title ?? "Alert", isPresented: $alertManager.isAlertPresented) {
                 alertManager.actions()
             } message: {
