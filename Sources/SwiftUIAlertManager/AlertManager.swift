@@ -52,16 +52,16 @@ public class AlertManager: ObservableObject {
     }
     
     public func present(_ type: AlertType,
-                 title: String? = nil,
-                 message: String? = nil,
-                 actions: [AlertAction]? = nil) {
+                        title: String? = nil,
+                        message: String? = nil,
+                        actions: [AlertAction]? = nil) {
         present(options: .init(type: type, title: title, message: message, actions: actions))
     }
     
     public func present(_ preset: AlertPreset,
-                 _ type: AlertType,
-                 message: String,
-                 actions: [AlertAction]? = nil) {
+                        _ type: AlertType,
+                        message: String,
+                        actions: [AlertAction]? = nil) {
         var title = ""
         switch preset {
         case .error:
@@ -81,9 +81,16 @@ public class AlertManager: ObservableObject {
         present(.error, .alert, message: error.localizedDescription, actions: actions)
     }
     
-    public func hide() {
-        withAnimation {
-            isAlertPresented = false
+    public func hide(_ type: AlertType) {
+        switch type {
+        case .alert:
+            withAnimation {
+                isAlertPresented = false
+            }
+        case .confirmationDialog:
+            withAnimation {
+                isConfirmationDialogPresented = false
+            }
         }
     }
 }
